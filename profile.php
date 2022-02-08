@@ -7,20 +7,21 @@ if(!isset($_SESSION['username'])) {
 }
 
 
-$username=$_SESSION['username'];
+
 $uid=$_SESSION['uid'];
-$email=$_SESSION['email'];
 
-// $profile="select * from users where id = $uid";
-// $profilerun=mysqli_query($conn,$profile);
 
-// $profiles= mysqli_fetch_all($profilerun, MYSQLI_ASSOC);
-// foreach($profiles as $profiles){
-//     $postiid= $post['postid'];
-//     $likeses= $post['likes'];
-//     $userid = $post['userid'];
-    
-// }
+$profile="select * from users where id = $uid";
+$profilerun=mysqli_query($conn,$profile);
+
+$profiles1= mysqli_fetch_all($profilerun, MYSQLI_ASSOC);
+foreach($profiles1 as $profiles){
+    $username= $profiles['username'];
+    $email= $profiles['email'];
+    $hobby= $profiles['hobby'];
+    $county=$profiles['county'];
+    $profile=$profiles['profile'];
+}
 
 if (isset($_POST['update'])) {
 	
@@ -39,6 +40,10 @@ if (isset($_POST['update'])) {
     if ($updaterun){
         move_uploaded_file($phototmp,"profiles/".  $photo_new_name);
                 echo "<script>alert('Profile update successfully');</script>";
+                header("Location:profile.php");
+    }
+    else{
+        echo "<script>alert('Profile update failed');</script>";
     }
 }
 
@@ -53,6 +58,8 @@ if (isset($_POST['update'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
 </head>
 <body>
 
@@ -122,23 +129,28 @@ if (isset($_POST['update'])) {
                   </div>
                   <div class="form-group">
                       <label for="">Username</label>
-                      <input type="text" class="form-control" name="username"value="<?php echo $username; ?>">
+                      <input type="text" class="form-control" name="username" value="<?php echo $username; ?>">
                   </div>
                   <div class="form-group">
                       <label for="">County</label>
-                      <input type="text" class="form-control" name="county">
+                      <input type="text" class="form-control" name="county" value="<?php echo $county; ?>">
                   </div>
                   <div class="form-group">
                       <label for="">Hobby</label>
-                      <input type="text" class="form-control" name="hobby">
-                  </div>
-                  <div class="form-group">
-                      <label for="">Profile</label>
-                      <input type="file" class="form-control" name="profile">
+                      <input type="text" class="form-control" name="hobby" value="<?php echo $hobby; ?>">
                   </div>
                  
                   <div class="form-group">
-                      <input type="submit" class="btn btn-primary form-control mt-2 mb-2"  name="update" value="Update your profile">
+                  <label>Your profile picture</label><br>
+                 <img src="profiles/<?php echo $profile; ?>" alt="" width=200 height=200>
+                  </div>
+                  <div class="form-group">
+                      <label for="">Update Profile</label>
+                      <input type="file" class="form-control" name="profile" value="<?php echo $profile; ?>">
+                  </div>
+                  
+                  <div class="form-group">
+                      <input type="submit" class="btn btn-primary form-control mt-2 mb-2" onclick="return confirm('<?php echo $username; ?> Click ok to confirm your profile update')" name="update" value="Update your profile">
                   </div>
                 
               </form>

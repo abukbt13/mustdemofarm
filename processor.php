@@ -5,10 +5,10 @@ include('connection.php');
 
 if (isset($_POST['register'])) {
 	
-	$username=$_POST['username'];
-	$email=$_POST['email'];
-	$password=$_POST['password'];
-	$confirmpassword=$_POST['confirmpassword'];
+	$username=mysql_escape_string($_POST['username']);
+	$email=mysql_escape_string($_POST['email']);
+	$password=md5($_POST['password']);
+	$confirmpassword=md5($_POST['confirmpassword']);
 	
 	
 	if ($password!=$confirmpassword) 
@@ -38,12 +38,10 @@ if (isset($_POST['register'])) {
 		$sql = "SELECT * FROM users WHERE  username = '$username'";
 		$result = mysqli_query($conn,$sql);
 		$users = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
 		foreach($users as $user){
 			$uid = $user['id'];
-			$email = $user['email'];
-			$username = $user['username'];
-			$dp=$user['profile'];
-					
+			$username = $user['username'];	
 		}
 		 
 		
@@ -52,8 +50,6 @@ if (isset($_POST['register'])) {
 			session_start();
 			$_SESSION['uid']=$uid;
 			$_SESSION['username']=$username;
-			$_SESSION['email']=$email;
-			$_SESSION['profile']=$dp;
 			$_SESSION['status']="successfuly registered";
 			header("location:index.php");
 		}

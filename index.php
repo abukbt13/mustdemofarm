@@ -1,22 +1,26 @@
-<?php 
-
-include('connection.php');
+<?php
+include ('connection.php');
 session_start();
-
 
 if(!isset($_SESSION['username'])) {
 	header('Location:login.php');
 }
 
-$message=$_SESSION['username'];
-$username=$_SESSION['username'];
+
+
 $uid=$_SESSION['uid'];
-$email=$_SESSION['email'];
+$profile="select * from users where id = $uid";
+$profilerun=mysqli_query($conn,$profile);
 
+$profiles1= mysqli_fetch_all($profilerun, MYSQLI_ASSOC);
+foreach($profiles1 as $profiles){
+    $username= $profiles['username'];
+    $email= $profiles['email'];
+    $hobby= $profiles['hobby'];
+    $county=$profiles['county'];
+    $profile=$profiles['profile'];
+}
 
-
-$sql="select * from post";
-$sqlrun=mysqli_query($conn,$sql);
 
 ?>
 <!DOCTYPE html>
@@ -86,36 +90,27 @@ $sqlrun=mysqli_query($conn,$sql);
       
 
     </header>
-    <img style="border-radius: 50%;" src="profiles/<?php echo $dp; ?>" width=200 height=200>
+    <!-- <img style="border-radius: 50%;" src="profiles/<?php echo $dp; ?>" width=200 height=200> -->
 <a href="post.php"><button class="btn btn-primary">What is on your mind?</button></a>
+<br>
+<hr>
+<div class="user">
+    <img style="border-radius: 50%;"src="profiles/<?php echo $profile; ?>" alt="profilepicture here" width=50 height=50>
+    <?php echo $username ?>
+</div>
+<?php
+include ('connection.php');
 
-    
-    
-    <hr>
+$post="select * from posts";
+$postrun=mysqli_query($conn,$post);
+$numrows=mysqli_num_rows($postrun);
 
-    <?php
-    if($sqlrun)
+if ($numrows>0){
+    
+    while($row=mysqli_fetch_assoc($postrun))
     {
-        while($row=mysqli_fetch_assoc($sql))
-        {
-            ?>
-
-             <div class="row center">
-                 <div class="title">
-                 <?php if(isset($_SESSION['status'])){
-        ?>
-        <div class="alert alert-success">
-        <!-- <h5><?php echo $message; ?></h5> -->
-        </div>
-        <?php  
-        unset($_SESSION['status']);                                 
-}
-?>
-                 <p><?php echo $row['feeling']; ?></p>
-                
-                 </div>
-             
-                <div class="col col-sm-4">
+    ?>
+    <div class="col col-sm-4">
                     <div class="card">
                         <div class="card-body">
                         
@@ -127,7 +122,7 @@ $sqlrun=mysqli_query($conn,$sql);
                                     </div>
                                   
                                     <div class="like-count">
-                                        <button style="border-radius: 50%;" class="btn btn-primary btn-sm mt-2 btn-round"><?php echo $likeses; ?></button>
+                                        <button style="border-radius: 50%;" class="btn btn-primary btn-sm mt-2 btn-round">9</button>
                                     </div>
                                     <div>
                                         <form autocomplete="off" class="form-horizontal pt-2 ml-2" action="commentslikes.php" method="post">
@@ -148,9 +143,11 @@ $sqlrun=mysqli_query($conn,$sql);
 
     }
     else{
-       echo "<script>alert('No record found')";
+       echo "<script>alert('No record found');</script>";
     }
     ?>
+
+
 
 
 </body>

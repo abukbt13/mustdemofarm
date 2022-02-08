@@ -1,10 +1,4 @@
-<?php
-include('connection.php');
-session_start();
-$message=$_SESSION['status'];
 
-
-?>
 
 
 <!DOCTYPE html>
