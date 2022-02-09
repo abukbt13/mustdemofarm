@@ -111,6 +111,7 @@ if ($numrows>0){
     {
     ?>
     <div class="col col-sm-4">
+    <?php echo $row['feeling']; ?>
                     <div class="card">
                         <div class="card-body">
                         
