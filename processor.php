@@ -5,8 +5,8 @@ include('connection.php');
 
 if (isset($_POST['register'])) {
 	
-	$username=mysql_escape_string($_POST['username']);
-	$email=mysql_escape_string($_POST['email']);
+	$username=$_POST['username'];
+	$email=$_POST['email'];
 	$password=md5($_POST['password']);
 	$confirmpassword=md5($_POST['confirmpassword']);
 	

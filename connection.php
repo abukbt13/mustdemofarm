@@ -1,3 +1,3 @@
 <?php
-$conn=new mysqli("localhost","root","","demofarm") or die("mysqli_error");
+$conn=new mysqli("localhost","root","","mustdemofarm") or die("mysqli_error");
 ?>

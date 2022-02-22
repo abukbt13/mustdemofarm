@@ -13,8 +13,8 @@
 </head>
 <body>
 <div class="container">
-      <div class="row">
-          <h1><?php echo $message; ?></h1>
+      <div class="row" style="align-items:center;">
+          <!-- <h1><?php echo $message; ?></h1> -->
           <h2>Login</h1>
           <div class="col-sm-4 mt-4">
               <form action="processor.php" method="post">

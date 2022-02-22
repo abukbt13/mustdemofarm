@@ -19,7 +19,7 @@ foreach($profiles1 as $profiles){
     $username= $profiles['username'];
     $email= $profiles['email'];
     $hobby= $profiles['hobby'];
-    $county=$profiles['county'];
+    $counti=$profiles['county'];
     $profile=$profiles['profile'];
 }
 
@@ -33,9 +33,8 @@ if (isset($_POST['update'])) {
     $photoname=$_FILES['profile']['name'];
     $phototmp=$_FILES['profile']['tmp_name'];
     $photo_new_name=rand() . $photoname;
-
-  
-    $update="update users set username='$username', email='$email',county='$county',hobby='$hobby',profile='$photo_new_name' where id='$uid'";
+if(empty($photoname)){
+    $update="update users set username='$username', email='$email',county='$county',hobby='$hobby' where id='$uid'";
     $updaterun=mysqli_query($conn,$update);
     if ($updaterun){
         move_uploaded_file($phototmp,"profiles/".  $photo_new_name);
@@ -46,6 +45,24 @@ if (isset($_POST['update'])) {
         echo "<script>alert('Profile update failed');</script>";
     }
 }
+else{
+    $update="update users set username='$username', email='$email',county='$county',hobby='$hobby',profile='$photo_new_name' where id='$uid'";
+    $updaterun=mysqli_query($conn,$update);
+    if ($updaterun){
+        move_uploaded_file($phototmp,"profiles/".  $photo_new_name);
+                echo "<script>alert('Profile update successfully');</script>";
+                header("Location:profile.php");
+    }
+    else{
+        echo "<script>alert('Profile update failed');</script>";
+    }
+
+}
+  
+    
+}
+  
+   
 
 ?>
 
@@ -133,7 +150,7 @@ if (isset($_POST['update'])) {
                   </div>
                   <div class="form-group">
                       <label for="">County</label>
-                      <input type="text" class="form-control" name="county" value="<?php echo $county; ?>">
+                      <input type="text" class="form-control" name="county" value="<?php echo $counti; ?>">
                   </div>
                   <div class="form-group">
                       <label for="">Hobby</label>
@@ -142,11 +159,11 @@ if (isset($_POST['update'])) {
                  
                   <div class="form-group">
                   <label>Your profile picture</label><br>
-                 <img src="profiles/<?php echo $profile; ?>" alt="" width=200 height=200>
+                 <img src="profiles/<?php echo $profile; ?>" alt="profile picture " width=200 height=200>
                   </div>
                   <div class="form-group">
                       <label for="">Update Profile</label>
-                      <input type="file" class="form-control" name="profile" value="<?php echo $profile; ?>">
+                      <input type="file" class="form-control" name="profile" value="">
                   </div>
                   
                   <div class="form-group">

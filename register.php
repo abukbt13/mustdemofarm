@@ -24,11 +24,11 @@
                   </div>
                   <div class="form-group">
                       <label for="">password</label>
-                      <input type="text" class="form-control" name="password" placeholder="Password" required="password" required="required">
+                      <input type="password" class="form-control" minimum-length="8" name="password" placeholder="Password" required="password" required="required">
                   </div>
                   <div class="form-group">
                       <label for="">Confirm Password</label>
-                      <input type="text" class="form-control" name="confirmpassword" placeholder="Confirm Password" required>
+                      <input type="password" class="form-control" minimum-length="8" name="confirmpassword" placeholder="Confirm Password" required>
                   </div>
                   <div class="form-group">
                       <input type="submit" class="btn btn-primary form-control mt-2 mb-2"  name="register" value="Register">
